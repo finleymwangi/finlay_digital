@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finlay Digital | Web Design & Development in Nairobi, Kenya</title>
+<meta name="description" content="Finlay Digital is a web design and development studio based in Nairobi, Kenya. We build fast, beautiful, and conversion-focused websites for businesses that want to stand out online."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --off-black: #111111;
+    --dark-card: #161616;
+    --white: #ffffff;
+    --off-white: #f0ede8;
+    --gray-dim: #888;
+    --gray-subtle: #2a2a2a;
+    --accent: #c8f55a;
+    --accent-dark: #a8d93a;
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAVBAR */
+  #navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 0 5vw;
+  }
+  .nav-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .logo {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.3rem;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .logo span { color: var(--accent); }
+  nav ul { list-style: none; display: flex; gap: 0; }
+  nav ul li a {
+    display: block;
+    padding: 8px 20px;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: color 0.2s;
+  }
+  nav ul li a:hover { color: var(--white); }
+  .nav-cta {
+    background: var(--accent);
+    color: var(--black) !important;
+    border-radius: 4px;
+    font-weight: 500 !important;
+    padding: 8px 20px !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--accent-dark) !important; color: var(--black) !important; }
+  .nav-mobile-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--white);
+    cursor: pointer;
+    font-size: 1.5rem;
+  }
+  .nav-dot {
+    display: inline-block;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    position: absolute;
+    bottom: -2px; left: 50%;
+    transform: translateX(-50%) scale(0);
+    transition: transform 0.25s;
+  }
+  nav ul li { position: relative; }
+  nav ul li.nav-active .nav-dot { transform: translateX(-50%) scale(1); }
+  nav ul li.nav-active > a { color: var(--white); }
+
+  /* MOBILE MENU */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    background: rgba(10,10,10,0.98);
+    backdrop-filter: blur(12px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+    padding: 12px 0;
+    transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--white); }
+  .mobile-menu .mobile-cta {
+    margin-top: 20px;
+    background: var(--accent);
+    color: var(--black) !important;
+    padding: 14px 36px;
+    border-radius: 4px;
+    font-size: 1.1rem !important;
+  }
+  .mobile-menu-close {
+    position: absolute;
+    top: 20px; right: 5vw;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.8rem;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  /* HERO */
+  #hero {
+    min-height: 92vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 80px 5vw 60px;
+  }
+  .hero-placeholder {
+    position: absolute;
+    inset: 0;
+    background: #141414;
+    z-index: 0;
+  }
+  .hero-placeholder::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, #0a0a0a 30%, rgba(10,10,10,0.4) 100%);
+  }
+  .hero-grid-lines {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-image:
+      linear-gradient(rgba(200,245,90,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,245,90,0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    border: 1px solid rgba(200,245,90,0.3);
+    padding: 5px 14px;
+    border-radius: 2px;
+  }
+  .kenya-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(200,245,90,0.08);
+    border: 1px solid rgba(200,245,90,0.2);
+    color: rgba(255,255,255,0.7);
+    font-size: 0.82rem;
+    font-weight: 400;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: var(--white);
+    max-width: 900px;
+    margin-bottom: 28px;
+  }
+  h1 em { font-style: normal; color: var(--accent); }
+  .hero-sub {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.65);
+    max-width: 520px;
+    margin-bottom: 20px;
+    line-height: 1.65;
+  }
+  .hero-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 44px; }
+  .hero-pill { font-size: 0.82rem; color: rgba(255,255,255,0.5); padding: 4px 0; }
+  .hero-pill::before { content: '—  '; color: var(--accent); }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+
+  /* TYPED CURSOR */
+  .typed-cursor {
+    display: inline-block;
+    width: 3px;
+    background: var(--accent);
+    margin-left: 4px;
+    animation: blink 0.75s step-end infinite;
+    vertical-align: baseline;
+    height: 0.85em;
+    border-radius: 1px;
+  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: var(--black);
+    padding: 14px 28px;
+    border-radius: 4px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: rgba(255,255,255,0.8);
+    padding: 14px 28px;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.5); color: var(--white); }
+  .btn-outline-sm {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.7);
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline-sm:hover { border-color: var(--accent); color: var(--accent); }
+  .arrow-icon { font-size: 0.75rem; transition: transform 0.2s; }
+  .btn-outline-sm:hover .arrow-icon { transform: translateX(3px); }
+
+  /* SECTION COMMONS */
+  section { padding: 100px 5vw; }
+  .container { max-width: 1280px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    color: var(--white);
+  }
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.45rem;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+
+  /* MISSION */
+  #mission { background: #0e0e0e; border-top: 1px solid var(--gray-subtle); border-bottom: 1px solid var(--gray-subtle); text-align: center; }
+  #mission .container { max-width: 860px; }
+  #mission h2 { margin-bottom: 32px; }
+  #mission p { font-size: 1.15rem; color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 22px; font-weight: 300; }
+  #mission p strong { color: var(--white); font-weight: 500; }
+
+  /* WHY US */
+  #why { background: var(--black); }
+  #why h2 { text-align: center; margin-bottom: 60px; }
+  .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .why-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 36px 28px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+  }
+  .why-card:hover {
+    border-color: rgba(200,245,90,0.3);
+    box-shadow: 0 0 32px rgba(200,245,90,0.08), 0 8px 32px rgba(0,0,0,0.4);
+    transform: translateY(-6px);
+  }
+  .why-icon {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,245,90,0.3);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 28px;
+    color: var(--accent);
+    font-size: 1.6rem;
+  }
+  .why-card p { color: rgba(255,255,255,0.55); font-size: 1.05rem; line-height: 1.7; margin-bottom: 24px; font-weight: 300; }
+
+  /* CLIENTS */
+  #clients { background: #0d0d0d; border-top: 1px solid var(--gray-subtle); border-bottom: 1px solid var(--gray-subtle); padding: 70px 5vw; }
+  #clients h2 { text-align: center; margin-bottom: 50px; }
+  .clients-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+  .client-cell {
+    display: flex; align-items: center; justify-content: center;
+    height: 100px;
+    border: 1px solid var(--gray-subtle);
+    color: rgba(255,255,255,0.3);
+    font-family: var(--font-display);
+    font-weight: 700; font-size: 1rem;
+    letter-spacing: 0.05em;
+    transition: color 0.25s, border-color 0.25s;
+  }
+  .client-cell:hover { color: rgba(255,255,255,0.7); border-color: rgba(200,245,90,0.25); }
+
+  /* WORK */
+  #work { background: var(--black); }
+  #work .work-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 50px; flex-wrap: wrap; gap: 20px; }
+  .work-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .work-card {
+    border-radius: 8px; overflow: hidden;
+    background: var(--dark-card);
+    border: 1px solid var(--gray-subtle);
+    transition: border-color 0.25s, transform 0.25s;
+    cursor: pointer; text-decoration: none; display: block;
+  }
+  .work-card:hover { border-color: rgba(200,245,90,0.4); transform: translateY(-4px); }
+
+  /* TESTIMONIALS */
+  #testimonials { background: #0d0d0d; border-top: 1px solid var(--gray-subtle); }
+  #testimonials .testi-header { text-align: center; margin-bottom: 70px; }
+  .testi-slider { max-width: 800px; margin: 0 auto; text-align: center; }
+
+  /* FOOTER */
+  footer { background: #0a0a0a; border-top: 1px solid var(--gray-subtle); padding: 70px 5vw 0; }
+  .footer-top {
+    max-width: 1280px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 50px; padding-bottom: 60px;
+    border-bottom: 1px solid var(--gray-subtle);
+  }
+  .footer-brand .logo { display: inline-block; margin-bottom: 16px; }
+  .footer-brand p { font-size: 0.9rem; color: rgba(255,255,255,0.4); line-height: 1.7; max-width: 280px; font-weight: 300; }
+  .footer-col h4 { font-family: var(--font-display); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 18px; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 10px; }
+  .footer-col ul li a { font-size: 0.9rem; color: rgba(255,255,255,0.5); text-decoration: none; font-weight: 300; transition: color 0.2s; }
+  .footer-col ul li a:hover { color: var(--white); }
+  .footer-bottom { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 20px 0; font-size: 0.82rem; color: rgba(255,255,255,0.3); flex-wrap: wrap; gap: 12px; }
+  .footer-bottom-links { display: flex; gap: 20px; }
+  .footer-bottom-links a { color: rgba(255,255,255,0.3); text-decoration: none; }
+  .footer-bottom-links a:hover { color: rgba(255,255,255,0.6); }
+
+  /* LOADING SCREEN */
+  #loading-screen {
+    position: fixed; inset: 0;
+    background: #0a0a0a;
+    z-index: 9999;
+    display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 20px;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+  }
+  #loading-screen.hidden { opacity: 0; visibility: hidden; }
+  .loading-logo { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
+  .loading-logo span { color: var(--accent); }
+  .loading-bar-wrap { width: 160px; height: 2px; background: #222; border-radius: 2px; overflow: hidden; }
+  .loading-bar { height: 100%; background: var(--accent); width: 0%; border-radius: 2px; animation: loadBar 1.2s ease forwards; }
+  @keyframes loadBar { 0% { width: 0%; } 60% { width: 80%; } 100% { width: 100%; } }
+
+  /* FORM SUCCESS */
+  #form-success {
+    display: none;
+    background: rgba(200,245,90,0.1);
+    border: 1px solid rgba(200,245,90,0.3);
+    border-radius: 8px;
+    padding: 20px 24px;
+    text-align: center;
+    margin-top: 16px;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #form-success p { color: var(--accent); font-size: 1rem; font-weight: 500; margin-bottom: 4px; }
+  #form-success span { color: rgba(255,255,255,0.5); font-size: 0.88rem; font-weight: 300; }
+
+  /* REVEAL ANIMATIONS */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-grid > *:nth-child(1) { transition-delay: 0s; }
+  .reveal-grid > *:nth-child(2) { transition-delay: 0.1s; }
+  .reveal-grid > *:nth-child(3) { transition-delay: 0.2s; }
+  .reveal-grid > *:nth-child(4) { transition-delay: 0.3s; }
+
+  /* ANIMATIONS */
+  @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .why-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+    .clients-grid { grid-template-columns: repeat(2, 1fr); }
+    .work-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    nav ul { display: none; }
+    .nav-mobile-btn { display: block; }
+    #hero { padding-top: 60px; }
+  }
+  @media (max-width: 600px) {
+    section { padding: 70px 5vw; }
+    .footer-top { grid-template-columns: 1fr; gap: 32px; }
+    .hero-actions { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LOADING SCREEN -->
+<div id="loading-screen">
+  <div class="loading-logo">Finlay<span>.</span>Digital</div>
+  <div class="loading-bar-wrap"><div class="loading-bar"></div></div>
+</div>
+
+<!-- NAVBAR -->
+<header id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="logo">Finlay<span>.</span>Digital</a>
+    <nav>
+      <ul>
+        <li><a href="#work">Our Work</a><span class="nav-dot"></span></li>
+        <li><a href="#why">Services</a><span class="nav-dot"></span></li>
+        <li><a href="#testimonials">Clients</a><span class="nav-dot"></span></li>
+        <li><a href="#mission">About</a><span class="nav-dot"></span></li>
+        <li><a href="#contact" class="nav-cta">Get in touch</a></li>
+      </ul>
+    </nav>
+    <button class="nav-mobile-btn" aria-label="Open menu">☰</button>
+  </div>
+</header>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <button class="mobile-menu-close" id="mobile-close">✕</button>
+  <a href="#work" class="mobile-link">Our Work</a>
+  <a href="#why" class="mobile-link">Services</a>
+  <a href="#testimonials" class="mobile-link">Clients</a>
+  <a href="#mission" class="mobile-link">About</a>
+  <a href="#contact" class="mobile-link mobile-cta">Get in touch</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-placeholder"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow reveal visible">Web Design &amp; Development</span>
+    <div class="kenya-badge reveal visible">🇰🇪 Based in Nairobi, Kenya</div>
+    <h1 class="reveal visible">
+      <span id="typed-word">Websites</span> built<br/>to <em>perform.</em>
+    </h1>
+    <p class="hero-sub reveal visible">
+      Finlay Digital crafts fast, beautiful, and conversion-focused websites for businesses that want to stand out online.
+    </p>
+    <div class="hero-pills reveal visible">
+      <span class="hero-pill">Web Design</span>
+      <span class="hero-pill">Web Development</span>
+      <span class="hero-pill">E-commerce</span>
+      <span class="hero-pill">SEO-Ready</span>
+    </div>
+    <div class="hero-actions reveal visible">
+      <a href="#contact" class="btn-primary">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+        Get a free quote
+      </a>
+      <a href="#work" class="btn-ghost">See our work ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section id="mission">
+  <div class="container">
+    <p class="section-label reveal">What we're about</p>
+    <h2 class="reveal">Digital presence that <br/>actually works for you</h2>
+    <div style="margin-top: 40px;">
+      <p class="reveal">We're not just another web agency. <strong>Finlay Digital</strong> is a focused, hands-on studio built around one belief: your website should be your hardest-working employee.</p>
+      <p class="reveal">Whether you need a sleek brochure site, a powerful e-commerce store, or a complete brand presence from scratch — we take care of the full journey, from the first conversation to the final launch and beyond.</p>
+      <p class="reveal">Every project we take on is treated like it's our own business on the line. That means tight communication, honest timelines, and results you can measure.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section id="why">
+  <div class="container">
+    <h2 class="reveal" style="text-align:center; margin-bottom: 60px;">Why choose Finlay Digital?</h2>
+    <div class="why-grid reveal-grid">
+      <div class="why-card reveal">
+        <div class="why-icon">
+          <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <h3>Speed to launch</h3>
+        <p>No bloated agency processes. We move fast with a clear workflow that gets your site live — without cutting corners on quality.</p>
+        <a href="#work" class="btn-outline-sm">See our work <span class="arrow-icon">→</span></a>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">
+          <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <h3>Built to convert</h3>
+        <p>Beautiful isn't enough. Every site we build is designed with user behaviour in mind — guiding visitors toward the action that matters most to you.</p>
+        <a href="#why" class="btn-outline-sm">Our approach <span class="arrow-icon">→</span></a>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">
+          <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>You own everything</h3>
+        <p>Full code ownership, no lock-in. When we hand over your site, it's truly yours — with clean, documented code you can manage confidently.</p>
+        <a href="#contact" class="btn-outline-sm">Let's talk <span class="arrow-icon">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section id="clients">
+  <div class="container">
+    <p class="section-label reveal" style="text-align:center;">Trusted by</p>
+    <h2 class="reveal" style="text-align:center; margin-bottom:50px;">Businesses we've worked with</h2>
+    <div class="clients-grid reveal-grid">
+      <div class="client-cell reveal">Hartwell &amp; Co.</div>
+      <div class="client-cell reveal">Vantage Foods</div>
+      <div class="client-cell reveal">Kelso Legal</div>
+      <div class="client-cell reveal">Brightfield Studio</div>
+      <div class="client-cell reveal">Marconi Events</div>
+      <div class="client-cell reveal">Dune Architecture</div>
+      <div class="client-cell reveal">Aldwick Finance</div>
+      <div class="client-cell reveal">Crestline Health</div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="container">
+    <div class="work-header">
+      <div>
+        <p class="section-label reveal">Portfolio</p>
+        <h2 class="reveal">Recent projects</h2>
+      </div>
+      <a href="#contact" class="btn-ghost reveal">View all work ↗</a>
+    </div>
+    <div class="work-grid">
+      <div style="grid-column: 1 / -1; border: 1px dashed #2a2a2a; border-radius: 8px; padding: 80px 40px; text-align: center;">
+        <p style="font-family:'Syne',sans-serif; font-size:1.5rem; font-weight:700; color:#fff; margin-bottom:12px;">Portfolio coming soon</p>
+        <p style="color:rgba(255,255,255,0.4); font-size:1rem; font-weight:300;">We're currently completing our first projects. Check back soon to see our work.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" style="background: #0e0e0e; border-top: 1px solid #2a2a2a;">
+  <div class="container">
+    <p class="section-label reveal" style="text-align:center;">How it works</p>
+    <h2 class="reveal" style="text-align:center; margin-bottom:16px;">From first conversation<br/>to live website</h2>
+    <p class="reveal" style="text-align:center; color:rgba(255,255,255,0.5); font-size:1.05rem; font-weight:300; max-width:560px; margin:0 auto 70px;">A simple, transparent process — so you always know exactly where your project stands.</p>
+    <div style="display:grid; grid-template-columns: repeat(4,1fr); gap:0;">
+      <div class="reveal" style="padding: 0 32px 0 0;">
+        <div style="display:flex; align-items:center; gap:16px; margin-bottom:24px;">
+          <div style="width:48px; height:48px; border-radius:50%; background:#c8f55a; color:#000; font-family:'Syne',sans-serif; font-weight:800; font-size:1.1rem; display:flex; align-items:center; justify-content:center; flex-shrink:0;">1</div>
+          <div style="height:1px; background:#2a2a2a; flex:1;"></div>
+        </div>
+        <h3 style="font-size:1.1rem; margin-bottom:10px;">Discovery call</h3>
+        <p style="color:rgba(255,255,255,0.5); font-size:0.92rem; line-height:1.7; font-weight:300;">We start with a free conversation to understand your business, your goals, and what you need from your website.</p>
+      </div>
+      <div class="reveal" style="padding: 0 32px;">
+        <div style="display:flex; align-items:center; gap:16px; margin-bottom:24px;">
+          <div style="width:48px; height:48px; border-radius:50%; background:#c8f55a; color:#000; font-family:'Syne',sans-serif; font-weight:800; font-size:1.1rem; display:flex; align-items:center; justify-content:center; flex-shrink:0;">2</div>
+          <div style="height:1px; background:#2a2a2a; flex:1;"></div>
+        </div>
+        <h3 style="font-size:1.1rem; margin-bottom:10px;">Design &amp; planning</h3>
+        <p style="color:rgba(255,255,255,0.5); font-size:0.92rem; line-height:1.7; font-weight:300;">We map out the structure, look, and feel of your site. You'll see exactly what it will look like before a single line of code is written.</p>
+      </div>
+      <div class="reveal" style="padding: 0 32px;">
+        <div style="display:flex; align-items:center; gap:16px; margin-bottom:24px;">
+          <div style="width:48px; height:48px; border-radius:50%; background:#c8f55a; color:#000; font-family:'Syne',sans-serif; font-weight:800; font-size:1.1rem; display:flex; align-items:center; justify-content:center; flex-shrink:0;">3</div>
+          <div style="height:1px; background:#2a2a2a; flex:1;"></div>
+        </div>
+        <h3 style="font-size:1.1rem; margin-bottom:10px;">Build &amp; review</h3>
+        <p style="color:rgba(255,255,255,0.5); font-size:0.92rem; line-height:1.7; font-weight:300;">We build your site and walk you through it at every stage. Your feedback shapes the final result — no surprises at the end.</p>
+      </div>
+      <div class="reveal" style="padding: 0 0 0 32px;">
+        <div style="display:flex; align-items:center; gap:16px; margin-bottom:24px;">
+          <div style="width:48px; height:48px; border-radius:50%; background:#c8f55a; color:#000; font-family:'Syne',sans-serif; font-weight:800; font-size:1.1rem; display:flex; align-items:center; justify-content:center; flex-shrink:0;">4</div>
+          <div style="height:1px; background:transparent; flex:1;"></div>
+        </div>
+        <h3 style="font-size:1.1rem; margin-bottom:10px;">Launch &amp; handover</h3>
+        <p style="color:rgba(255,255,255,0.5); font-size:0.92rem; line-height:1.7; font-weight:300;">We launch your site, hand over full ownership, and make sure you're confident managing it. We're still here if you need us after.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container">
+    <div class="testi-header">
+      <p class="section-label reveal">What clients say</p>
+      <h2 class="reveal">Results our clients love</h2>
+    </div>
+    <div class="testi-slider reveal">
+      <div style="border: 1px dashed #2a2a2a; border-radius: 8px; padding: 80px 40px; text-align: center; max-width: 700px; margin: 0 auto;">
+        <p style="font-family:'Syne',sans-serif; font-size:1.5rem; font-weight:700; color:#fff; margin-bottom:12px;">Client testimonials coming soon</p>
+        <p style="color:rgba(255,255,255,0.4); font-size:1rem; font-weight:300;">We're currently working with our first clients. Their feedback will appear here shortly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background: var(--off-black); border-top: 1px solid #222; text-align: center;">
+  <div class="container" style="max-width: 700px;">
+    <p class="section-label reveal">Start a project</p>
+    <h2 class="reveal" style="margin-bottom: 20px;">Ready to build something great?</h2>
+    <p class="reveal" style="color: rgba(255,255,255,0.55); font-size: 1.1rem; margin-bottom: 40px; font-weight: 300;">Tell us about your project and we'll get back to you within one business day — no obligation, no hard sell.</p>
+    <div class="reveal" style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+      <a href="mailto:finlaydigital0@gmail.com" class="btn-primary">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        finlaydigital0@gmail.com
+      </a>
+      <a href="#work" class="btn-ghost">View our portfolio</a>
+    </div>
+    <form id="contact-form" action="https://formspree.io/f/meedvlbr" method="POST" style="max-width:560px; margin: 48px auto 0; display:flex; flex-direction:column; gap:16px;">
+      <input type="text" name="name" placeholder="Your name" required style="background:#1a1a1a; border:1px solid #2a2a2a; color:#fff; padding:14px 18px; border-radius:6px; font-size:0.95rem; outline:none; font-family:'DM Sans',sans-serif;">
+      <input type="email" name="email" placeholder="Your email address" required style="background:#1a1a1a; border:1px solid #2a2a2a; color:#fff; padding:14px 18px; border-radius:6px; font-size:0.95rem; outline:none; font-family:'DM Sans',sans-serif;">
+      <input type="tel" name="phone" placeholder="Your phone number" style="background:#1a1a1a; border:1px solid #2a2a2a; color:#fff; padding:14px 18px; border-radius:6px; font-size:0.95rem; outline:none; font-family:'DM Sans',sans-serif;">
+      <textarea name="message" placeholder="Tell me about your project..." rows="5" required style="background:#1a1a1a; border:1px solid #2a2a2a; color:#fff; padding:14px 18px; border-radius:6px; font-size:0.95rem; outline:none; resize:vertical; font-family:'DM Sans',sans-serif;"></textarea>
+      <button type="submit" id="form-submit-btn" class="btn-primary" style="align-self:center; width:100%;">Send message →</button>
+    </form>
+    <div id="form-success">
+      <p>✅ Message sent successfully!</p>
+      <span>Thank you for reaching out. I'll get back to you within 24 hours.</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="logo">Finlay<span>.</span>Digital</a>
+      <p>A focused web design and development studio. We build websites that work hard for your business.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#">Web Design</a></li>
+        <li><a href="#">Web Development</a></li>
+        <li><a href="#">E-commerce</a></li>
+        <li><a href="#">Landing Pages</a></li>
+        <li><a href="#">Maintenance &amp; Support</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#mission">About</a></li>
+        <li><a href="#work">Our Work</a></li>
+        <li><a href="#testimonials">Clients</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="#">LinkedIn</a></li>
+        <li><a href="#">Twitter / X</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="mailto:finlaydigital0@gmail.com">Email us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Finlay Digital. All rights reserved.</p>
+    <div class="footer-bottom-links">
+      <a href="#" id="open-privacy">Privacy Policy</a>
+      <a href="#" id="open-terms">Terms</a>
+      <a href="#">Sitemap</a>
+    </div>
+  </div>
+</footer>
+
+<!-- PRIVACY POLICY MODAL -->
+<div id="privacy-modal" style="display:none; position:fixed; inset:0; z-index:999; background:rgba(0,0,0,0.85); backdrop-filter:blur(6px); align-items:flex-end; justify-content:center;">
+  <div style="background:#161616; border:1px solid #2a2a2a; border-radius:16px 16px 0 0; width:100%; max-width:860px; height:85vh; display:flex; flex-direction:column;">
+    <div style="display:flex; align-items:center; justify-content:space-between; padding:20px 28px; border-bottom:1px solid #2a2a2a; flex-shrink:0;">
+      <h2 style="font-family:'Syne',sans-serif; font-size:1.3rem; font-weight:700;">Privacy Policy</h2>
+      <button id="close-privacy" style="background:#2a2a2a; border:none; color:#fff; width:36px; height:36px; border-radius:50%; font-size:1.1rem; cursor:pointer;">✕</button>
+    </div>
+    <iframe src="privacy-policy.pdf" style="flex:1; border:none; width:100%;"></iframe>
+  </div>
+</div>
+
+<!-- TERMS & CONDITIONS MODAL -->
+<div id="terms-modal" style="display:none; position:fixed; inset:0; z-index:999; background:rgba(0,0,0,0.85); backdrop-filter:blur(6px); align-items:flex-end; justify-content:center;">
+  <div style="background:#161616; border:1px solid #2a2a2a; border-radius:16px 16px 0 0; width:100%; max-width:860px; height:85vh; display:flex; flex-direction:column;">
+    <div style="display:flex; align-items:center; justify-content:space-between; padding:20px 28px; border-bottom:1px solid #2a2a2a; flex-shrink:0;">
+      <h2 style="font-family:'Syne',sans-serif; font-size:1.3rem; font-weight:700;">Terms &amp; Conditions</h2>
+      <button id="close-terms" style="background:#2a2a2a; border:none; color:#fff; width:36px; height:36px; border-radius:50%; font-size:1.1rem; cursor:pointer;">✕</button>
+    </div>
+    <iframe src="terms-and-conditions.pdf" style="flex:1; border:none; width:100%;"></iframe>
+  </div>
+</div>
+
+<!-- BACK TO TOP -->
+<button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed; bottom:90px; right:28px; z-index:998; background:#c8f55a; color:#000; border:none; width:44px; height:44px; border-radius:50%; font-size:1.2rem; cursor:pointer; display:none; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(0,0,0,0.4); transition:background 0.2s, transform 0.2s;" title="Back to top">↑</button>
+
+<!-- COOKIE BANNER -->
+<div id="cookie-banner" style="position:fixed; bottom:0; left:0; right:0; z-index:997; background:#161616; border-top:1px solid #2a2a2a; padding:20px 5vw; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;">
+  <p style="font-size:0.88rem; color:rgba(255,255,255,0.6); font-weight:300; max-width:700px; margin:0;">
+    We use cookies to improve your experience on our website. By continuing to browse, you agree to our
+    <a href="#" id="cookie-privacy-link" style="color:#c8f55a; text-decoration:underline;">Privacy Policy</a>.
+  </p>
+  <div style="display:flex; gap:12px; flex-shrink:0;">
+    <button id="cookie-decline" style="background:transparent; border:1px solid #2a2a2a; color:rgba(255,255,255,0.5); padding:10px 20px; border-radius:4px; font-size:0.85rem; cursor:pointer; font-family:'DM Sans',sans-serif;">Decline</button>
+    <button id="cookie-accept" style="background:#c8f55a; border:none; color:#000; padding:10px 20px; border-radius:4px; font-size:0.85rem; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif;">Accept</button>
+  </div>
+</div>
+
+<!-- WHATSAPP BUTTON -->
+<a href="https://wa.me/254114146895" target="_blank" style="position:fixed; bottom:28px; right:28px; z-index:998; background:#25D366; color:#fff; width:54px; height:54px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(0,0,0,0.4); transition:transform 0.2s; text-decoration:none;" title="Chat on WhatsApp" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<script>
+  // LOADING SCREEN
+  window.addEventListener('load', () => {
+    setTimeout(() => { document.getElementById('loading-screen').classList.add('hidden'); }, 1400);
+  });
+
+  // TYPING ANIMATION
+  const typedEl = document.getElementById('typed-word');
+  const words = ['Websites', 'Stores', 'Brands', 'Portfolios', 'Platforms'];
+  let wordIndex = 0, charIndex = words[0].length, isDeleting = false;
+  const cursor = document.createElement('span');
+  cursor.className = 'typed-cursor';
+  typedEl.after(cursor);
+  function typeLoop() {
+    const current = words[wordIndex];
+    if (isDeleting) {
+      charIndex--;
+      typedEl.textContent = current.substring(0, charIndex);
+      if (charIndex === 0) { isDeleting = false; wordIndex = (wordIndex + 1) % words.length; setTimeout(typeLoop, 400); return; }
+      setTimeout(typeLoop, 60);
+    } else {
+      charIndex++;
+      typedEl.textContent = current.substring(0, charIndex);
+      if (charIndex === current.length) { setTimeout(() => { isDeleting = true; typeLoop(); }, 2000); return; }
+      setTimeout(typeLoop, 100);
+    }
+  }
+  setTimeout(() => { isDeleting = true; typeLoop(); }, 2500);
+
+  // NAV ACTIVE INDICATOR
+  const sections = [{ id: 'work', li: 0 }, { id: 'why', li: 1 }, { id: 'testimonials', li: 2 }, { id: 'mission', li: 3 }];
+  const navItems = document.querySelectorAll('nav ul li');
+  function updateNav() {
+    let current = '';
+    sections.forEach(({ id }) => { const el = document.getElementById(id); if (el && window.scrollY >= el.offsetTop - 120) current = id; });
+    navItems.forEach(li => li.classList.remove('nav-active'));
+    const active = sections.find(s => s.id === current);
+    if (active) navItems[active.li].classList.add('nav-active');
+  }
+  window.addEventListener('scroll', updateNav);
+
+  // MOBILE MENU
+  const mobileMenu = document.getElementById('mobile-menu');
+  document.querySelector('.nav-mobile-btn').addEventListener('click', () => { mobileMenu.classList.add('open'); document.body.style.overflow = 'hidden'; });
+  function closeMenu() { mobileMenu.classList.remove('open'); document.body.style.overflow = ''; }
+  document.getElementById('mobile-close').addEventListener('click', closeMenu);
+  document.querySelectorAll('.mobile-link').forEach(link => link.addEventListener('click', closeMenu));
+
+  // CONTACT FORM
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('form-submit-btn');
+      btn.textContent = 'Sending...'; btn.style.opacity = '0.7'; btn.disabled = true;
+      try {
+        const response = await fetch(contactForm.action, { method: 'POST', body: new FormData(contactForm), headers: { 'Accept': 'application/json' } });
+        if (response.ok) { contactForm.style.display = 'none'; document.getElementById('form-success').style.display = 'block'; }
+        else { btn.textContent = 'Something went wrong — try again'; btn.style.opacity = '1'; btn.disabled = false; }
+      } catch { btn.textContent = 'Something went wrong — try again'; btn.style.opacity = '1'; btn.disabled = false; }
+    });
+  }
+
+  // MODALS
+  function openModal(id) { document.getElementById(id).style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+  function closeModal(id) { document.getElementById(id).style.display = 'none'; document.body.style.overflow = ''; }
+  document.getElementById('open-privacy').addEventListener('click', e => { e.preventDefault(); openModal('privacy-modal'); });
+  document.getElementById('close-privacy').addEventListener('click', () => closeModal('privacy-modal'));
+  document.getElementById('open-terms').addEventListener('click', e => { e.preventDefault(); openModal('terms-modal'); });
+  document.getElementById('close-terms').addEventListener('click', () => closeModal('terms-modal'));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal('privacy-modal'); closeModal('terms-modal'); } });
+  document.getElementById('privacy-modal').addEventListener('click', e => { if (e.target === document.getElementById('privacy-modal')) closeModal('privacy-modal'); });
+  document.getElementById('terms-modal').addEventListener('click', e => { if (e.target === document.getElementById('terms-modal')) closeModal('terms-modal'); });
+
+  // SCROLL REVEAL
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  // BACK TO TOP
+  const backBtn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => { backBtn.style.display = window.scrollY > 400 ? 'flex' : 'none'; });
+  backBtn.addEventListener('mouseover', () => { backBtn.style.transform = 'translateY(-3px)'; });
+  backBtn.addEventListener('mouseout', () => { backBtn.style.transform = 'none'; });
+
+  // COOKIE BANNER
+  const banner = document.getElementById('cookie-banner');
+  if (localStorage.getItem('cookieConsent')) banner.style.display = 'none';
+  document.getElementById('cookie-accept').addEventListener('click', () => { localStorage.setItem('cookieConsent', 'accepted'); banner.style.display = 'none'; });
+  document.getElementById('cookie-decline').addEventListener('click', () => { localStorage.setItem('cookieConsent', 'declined'); banner.style.display = 'none'; });
+  document.getElementById('cookie-privacy-link').addEventListener('click', e => { e.preventDefault(); openModal('privacy-modal'); });
+
+  // STICKY NAVBAR
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => { navbar.style.background = window.scrollY > 60 ? 'rgba(10,10,10,0.97)' : 'rgba(10,10,10,0.85)'; });
+</script>
+</body>
+</html>
